@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pokemon/detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,48 +64,87 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: pokedex?.length,
                           itemBuilder: (context, index) {
                             var typed = pokedex?[index]['type'];
-                            var color= typed[0] == "Grass" ? Colors.greenAccent : typed[0] == "Fire" ? Colors.redAccent
-                                : typed[0] == "Water" ? Colors.blue : typed[0] == "Poison" ? Colors.deepPurpleAccent
-                                : typed[0] == "Electric" ? Colors.amber : typed[0] == "Rock" ? Colors.grey
-                                : typed[0] == "Ground" ? Colors.brown : typed[0] == "Psychic" ? Colors.indigo
-                                : typed[0] == "Fighting" ? Colors.orange : typed[0] == "Bug" ? Colors.lightGreenAccent
-                                : typed[0] == "Ghost" ? Colors.deepPurple : typed[0] == "Normal" ? Colors.black26 : Colors.pink;
-                            return Card(
-                              color:color,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color:color,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      bottom: -10,
-                                      right: -10,
-                                      child: Image.asset(
-                                        'images/pokeball.png',
-                                        height: 100,
-                                        fit: BoxFit.fitHeight,
+                            var color = typed[0] == "Grass"
+                                ? Colors.greenAccent
+                                : typed[0] == "Fire"
+                                    ? Colors.redAccent
+                                    : typed[0] == "Water"
+                                        ? Colors.blue
+                                        : typed[0] == "Poison"
+                                            ? Colors.deepPurpleAccent
+                                            : typed[0] == "Electric"
+                                                ? Colors.amber
+                                                : typed[0] == "Rock"
+                                                    ? Colors.grey
+                                                    : typed[0] == "Ground"
+                                                        ? Colors.brown
+                                                        : typed[0] == "Psychic"
+                                                            ? Colors.indigo
+                                                            : typed[0] ==
+                                                                    "Fighting"
+                                                                ? Colors.orange
+                                                                : typed[0] ==
+                                                                        "Bug"
+                                                                    ? Colors
+                                                                        .lightGreenAccent
+                                                                    : typed[0] ==
+                                                                            "Ghost"
+                                                                        ? Colors
+                                                                            .deepPurple
+                                                                        : typed[0] ==
+                                                                                "Normal"
+                                                                            ? Colors.black26
+                                                                            : Colors.pink;
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailScreen(
+                                        pokemonDetails: pokedex?[index],
+                                        color: color,
+                                        heroTag: index,
                                       ),
-                                    ),
-                                    Positioned(
-                                        top: 30,
-                                        left: 20,
-                                        child: Text(
-                                          pokedex?[index]['name'] ?? '',
-                                          style: TextStyle(color: Colors.white),
-                                        )),
-                                    Positioned(
-                                        top: 50,
-                                        left: 20,
-                                        child: Text(typed.toString() ?? '',
-                                            style: TextStyle(fontSize: 10))),
-                                    Positioned(
-                                        bottom: 5,
-                                        right: 5,
-                                        child: Image.network(
-                                            pokedex?[index]['img'] ?? '')),
-                                  ],
+                                    ));
+                              },
+                              child: Card(
+                                color: color,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: color,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        bottom: -10,
+                                        right: -10,
+                                        child: Image.asset(
+                                          'images/pokeball.png',
+                                          height: 100,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      ),
+                                      Positioned(
+                                          top: 30,
+                                          left: 20,
+                                          child: Text(
+                                            pokedex?[index]['name'] ?? '',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          )),
+                                      Positioned(
+                                          top: 50,
+                                          left: 20,
+                                          child: Text(typed.toString() ?? '',
+                                              style: TextStyle(fontSize: 10))),
+                                      Positioned(
+                                          bottom: 5,
+                                          right: 5,
+                                          child: Image.network(
+                                              pokedex?[index]['img'] ?? '')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
